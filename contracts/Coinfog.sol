@@ -1,50 +1,65 @@
-pragma solidity ^0.8.0;
+//SPDX-License-Idettifier: MIT
+//SPDX-License-Identifier: MIT
+
+pragma solidity >=0.8.7;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CoinFog is Ownable {
-    mapping(address => uint256) public balances;
+
+    mapping(address => uint) public balances;
     mapping(address => bool) public isDeposited;
-    
-    uint256 public withdrawalLimit;
-    uint256 public withdrawalFee;
-    
-    event Deposit(address indexed user, uint256 amount);
-    event Withdrawal(address indexed user, uint256 amount, uint256 fee);
-    
-    constructor(uint256 limit, uint256 fee) {
+
+    uint public withdrawalLimit;
+    uint public withdrawalFee; //as a percentage of withdrawal amount
+
+    event Deposit(address indexed depositor, uint amount);
+    event Withdrawal(address indexed withdrawer, uint amount, uint fee);
+
+
+    constructor(uint limit, uint fee) {
         withdrawalLimit = limit;
         withdrawalFee = fee;
     }
-    
+
     function deposit() external payable {
-        require(msg.value > 0, "No funds provided for deposit.");
-        require(!isDeposited[msg.sender], "Already deposited.");
-        
+        require(msg.value > 0, "Deposit amount must be bigger than 0");
+        require(isDeposited[msg.sender] == false, "Already deposited");
+
         balances[msg.sender] += msg.value;
         isDeposited[msg.sender] = true;
         
         emit Deposit(msg.sender, msg.value);
     }
     
-    function withdraw(uint256 amount) external {
-        require(amount > 0, "Invalid withdrawal amount.");
-        require(amount <= balances[msg.sender], "Insufficient balance.");
-        require(amount <= withdrawalLimit, "Exceeded withdrawal limit.");
-        
-        uint256 fee = amount * withdrawalFee / 100;
-        uint256 withdrawalAmount = amount - fee;
-        
-        balances[msg.sender] -= amount;
-        
+    function withdraw(uint _amount) external {
+        require(_amount > 0, "invalid withdrawal amount");
+        require(_amount <= balances[msg.sender], "insufficient balance");
+        require(_amount <= withdrawalLimit, "exceeded withdrawal limit");
+
+        uint fee = _amount * withdrawalFee / 100;
+        uint withdrawalAmount = _amount - fee;
+        balances[msg.sender] -= _amount;
+
         emit Withdrawal(msg.sender, withdrawalAmount, fee);
         
-        // Transfer the withdrawal amount to the user's address
-        payable(msg.sender).transfer(withdrawalAmount);
+        //transferring withdrawalAmount from contract to msg.sender
+        (bool success, ) = msg.sender.call{value: withdrawalAmount}("");
+        require(success, "failed to send the amount");
     }
     
-    function getBalance() external view returns (uint256) {
+    function getBalance() external view returns(uint) {
         return balances[msg.sender];
+    }
+
+    function getContractBalance() external view returns(uint) {
+        return address(this).balance;
+    }
+
+    function mixFunds() external onlyOwner {
+        require(address(this).balance > 10000, "no funds to mix");//Randomly I chose 1000 to make the statement more meaningful
+        uint mixedAmount = address(this).balance;
+        
     }
     
     function mixFunds() external onlyOwner {
