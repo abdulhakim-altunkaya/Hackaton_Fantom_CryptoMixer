@@ -56,13 +56,25 @@ contract CoinFog is Ownable {
         return address(this).balance;
     }
 
-    function mixFunds() external onlyOwner {
+    function mixFunds(uint numAddress) external onlyOwner {
         require(address(this).balance > 10000, "no funds to mix");//Randomly I chose 1000 to make the statement more meaningful
         uint mixedAmount = address(this).balance;
+
+        //mixing logic, distribute the amount between 5 new numAddress number of addresses
+        uint amountPerAddress = mixedAmount / numAddress; //distribute equally
+
+        address[] memory addresses = generateAddresses(numAddress);
+
+    }
+
+
+    function generateAddresses(uint numAddresses) private view returns(address[] memory) {
+        address[] memory addresses = new address[](numAddresses);
+
         
     }
-    
-    function mixFunds() external onlyOwner {
+
+    function mixFunds2() external onlyOwner {
         require(address(this).balance > 0, "No funds available for mixing.");
         
         uint256 mixedAmount = address(this).balance;
@@ -84,7 +96,7 @@ contract CoinFog is Ownable {
         emit Withdrawal(address(this), mixedAmount, 0);
     }
     
-    function generateAddresses(uint256 numAddresses) private view returns (address[] memory) {
+    function generateAddresses2(uint256 numAddresses) private view returns (address[] memory) {
         address[] memory addresses = new address[](numAddresses);
         
         for (uint256 i = 0; i < numAddresses; i++) {
