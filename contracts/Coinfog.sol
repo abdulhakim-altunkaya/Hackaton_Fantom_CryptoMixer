@@ -55,9 +55,16 @@ contract CoinFog is Ownable {
     function getContractBalance() external view returns(uint) {
         return address(this).balance;
     }
+    function updateWithdrawalLimit(uint _newLimit) external onlyOwner {
+        withdrawalLimit = _newLimit;
+    }
+    function updateWithdrawalFee(uint _newFee) external onlyOwner {
+        withdrawalFee = _newFee;
+    }
+
 
     function mixFunds(uint numAddress) external onlyOwner {
-        require(address(this).balance > 10000, "no funds to mix");//Randomly I chose 1000 to make the statement more meaningful
+        require(address(this).balance > 10000, "no funds to mix");//Randomly I chose 10000 to make the statement more meaningful
         uint mixedAmount = address(this).balance;
 
         //mixing logic, distribute the amount between 5 new numAddress number of addresses
@@ -112,11 +119,5 @@ contract CoinFog is Ownable {
         // Example: payable(recipient).transfer(amount);
     }
     
-    function updateWithdrawalLimit(uint256 newLimit) external onlyOwner {
-        withdrawalLimit = newLimit;
-    }
-    
-    function updateWithdrawalFee(uint256 newFee) external onlyOwner {
-        withdrawalFee = newFee;
-    }
+
 }
