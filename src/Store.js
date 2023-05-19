@@ -1,13 +1,7 @@
-
-
-
-
-
-
 import {create } from "zustand";
 import { ethers } from "ethers";
-import { CONTRACT_ABI} from "./ContractABI";
-import {CONTRACT_ADDRESS} from "./ContractAddress";
+import { CONTRACT_ABI } from "./ContractABI";
+import { CONTRACT_ADDRESS } from "./ContractAddress";
 
 let signer;
 let provider; 
@@ -26,3 +20,7 @@ export const useAccount = create( () => (
         contract: contract1
     }
 ))
+
+
+
+
