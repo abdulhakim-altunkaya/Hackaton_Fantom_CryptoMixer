@@ -1,4 +1,16 @@
-body{
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  background-color:bisque;
+body {
+  background-color: palevioletred;
+  font-family: tahoma;
+  font-size: 33px;
+  text-align: center;	
+}
+button {
+  background-color: aquamarine;
+  font-size: 33px;
+  padding: 5px;
+  font-family: Impact;
+  margin: 10px;
+}
+button:hover {
+  background-color: yellow;
 }

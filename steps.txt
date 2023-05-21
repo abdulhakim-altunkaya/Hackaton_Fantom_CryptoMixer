@@ -1,0 +1,6 @@
+Create a simple contract and frontend
+and see if you can generate addresses from frontend
+
+Later see if you can trigger generateaddress functionality of frontend
+by using a solidity smart contract function. To do that first you need to test
+triggering frontendcode by using events
