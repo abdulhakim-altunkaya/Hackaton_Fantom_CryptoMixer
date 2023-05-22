@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAccount } from "./Store.js";
+import { ethers } from "ethers";
 
 function App() {
   const {ethereum} = window;
@@ -23,14 +24,25 @@ function App() {
     setCity(data2);
   }
 
+  let [newAddress, setNewAddress] = useState("");
+  let [newKey, setNewKey] = useState("");
+  const generateAddress = () => {
+    const wallet = ethers.Wallet.createRandom();
+    const addressData = wallet.address;
+    const keyData = wallet.privateKey;
+    setNewAddress(addressData);
+    setNewKey(keyData);
+  }
+
   return (
     <div className="App">
         <button onClick={connectMetamask}>CONNECT TO METAMASK</button>
         <p>{account}</p>
         <button onClick={getData}>GET DATA FROM CONTRACT</button>
         <p>{city}</p>
-        <button>TEST BUTTON</button>
-        <p></p>
+        <button onClick={generateAddress}>GENERATE ADDRESS</button>
+        <p>New address is: {newAddress}</p>
+        <p>Key is: {newKey}</p>
     </div>
   );
 }
