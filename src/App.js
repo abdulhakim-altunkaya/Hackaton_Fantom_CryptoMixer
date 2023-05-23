@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAccount } from "./Store.js";
 import { ethers } from "ethers";
 
@@ -34,12 +34,32 @@ function App() {
     setNewKey(keyData);
   }
 
+  let [newNumber, setNewNumber] = useState("");
+  const changeNumber = async () => {
+    await myContract.changeNum();
+  }
+
+  useEffect(() => {
+    // Listen to the event emitted by the contract
+    myContract.on('NumChanged', () => {
+      console.log("hello");
+      generateAddress();
+    });
+
+    return () => {
+      myContract.removeAllListeners();
+    };
+  }, [myContract]);
+
+
   return (
     <div className="App">
         <button onClick={connectMetamask}>CONNECT TO METAMASK</button>
         <p>{account}</p>
         <button onClick={getData}>GET DATA FROM CONTRACT</button>
         <p>{city}</p>
+        <button onClick={changeNumber}>CHANGE NUMBER</button>
+        <p>{newNumber}</p>
         <button onClick={generateAddress}>GENERATE ADDRESS</button>
         <p>New address is: {newAddress}</p>
         <p>Key is: {newKey}</p>
