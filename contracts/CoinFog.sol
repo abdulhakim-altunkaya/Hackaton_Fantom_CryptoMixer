@@ -16,6 +16,28 @@ contract CoinFog {
         require(success, "transfer failed");
         emit Withdraw(receiver, amount);
     }
+
+    mapping(bytes32 => uint) public balances;
+    bytes32[] public balanceIds;
+
+    function addMapping(bytes32 input1, uint input2) external {
+        balances[input1] = input2;
+        balanceIds.push(input1);
+    }
+
+    function createHash(string memory _word) external pure returns(bytes32) {
+        return keccak256(abi.encodePacked(_word));
+    }
+
+    function compareHash(string memory inputValue) external view returns(bool) {
+        bytes32 idHash = keccak256(abi.encodePacked(inputValue));
+        for(uint i=0; i<balanceIds.length; i++) {
+            if(balanceIds[i] == idHash) {
+                return true;
+            } 
+        }
+        return false;
+    }
 }
 
 

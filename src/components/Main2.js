@@ -1,28 +1,32 @@
-import React, {useState} from 'react';
-import { SHA256 } from 'crypto-js';
+import React, { useState } from 'react';
+import { ethers } from 'ethers';
 
-function Main2() {
-  let[word, setWord] = useState("");
-  let[hashed, setHashed] = useState("");
+function internalHash(inputValue) {
+  const hash = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(inputValue));
+  return hash;
+}
 
-  function internalHash(inputValue) {
-    const output = SHA256(inputValue).toString();
-    return output;
-  }
+function App() {
+  const [word, setWord] = useState('');
+  const [hashed, setHashed] = useState('');
 
   const hashInput = () => {
-    let newHash = internalHash(word);
+    const newHash = internalHash(word);
     setHashed(newHash);
-  }
+  };
 
   return (
     <div>
-      <button onClick={hashInput}>HASH THE WORD</button> <br />
-      <input type="text" value={word} onChange={e => setWord(e.target.value)} />
-      <p>Input: {word}</p>
-      <p>Output: {hashed}</p>
+      <input
+        type="text"
+        value={word}
+        onChange={(e) => setWord(e.target.value)}
+      />
+      <button onClick={hashInput}>Hash</button>
+      <p>Original word: {word}</p>
+      <p>Hashed word: {hashed}</p>
     </div>
-  )
+  );
 }
 
-export default Main2;
+export default App;
