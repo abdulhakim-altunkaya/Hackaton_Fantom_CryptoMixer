@@ -2,12 +2,20 @@
 
 pragma solidity >=0.8.7;
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract CoinFog {
     event Deposit(address indexed sender, uint amount);
     event Withdraw(address indexed receiver, uint amount);
 
-    function deposit() external payable {
-        emit Deposit(msg.sender, msg.value);
+    IERC20 tokenContract;
+
+    function setToken(address tokenAddress) external {
+        tokenContract = IERC20(tokenAddress);
+    }
+
+    function deposit(uint _amount) external payable {
+        tokenContract.transferFrom(msg.sender, address(this), _amount*(10**18));
     }
 
     function withdraw(address payable receiver, uint amount) public {
@@ -15,6 +23,10 @@ contract CoinFog {
         (bool success, ) = receiver.call{value: amount}("");
         require(success, "transfer failed");
         emit Withdraw(receiver, amount);
+    }
+    
+    function withdrawPart(string calldata _keyword, bytes32 _newHash, uint _amount) external {
+
     }
 
     mapping(bytes32 => uint) public balances;
