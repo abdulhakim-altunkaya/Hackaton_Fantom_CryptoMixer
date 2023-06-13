@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { ethers } from "ethers";
-import { CONTRACT_ABI } from "./AddressABI/ContractABI";
-import { CONTRACT_ADDRESS } from "./AddressABI/ContractAddress";
+import { CONTRACT_ABI } from "./components/AddressABI/ContractABI";
+import { CONTRACT_ADDRESS } from "./components/AddressABI/ContractAddress";
 
 let signer;
 let provider; 

@@ -4,7 +4,7 @@
 body {
   margin: 0;
   font-family: "Quicksand", 'Trebuchet MS';
-  background-image: url("../public/background4.jpg");
+  background-image: url("../public/background.png");
   background-size: 100%;
 }
 .App {

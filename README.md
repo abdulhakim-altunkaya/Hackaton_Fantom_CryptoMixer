@@ -1,70 +1,53 @@
-# Getting Started with Create React App
+<h1>CoinFog</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<p>CoinFog is a privacy-focused crypto mixing project that allows users to obfuscate the source of their funds and enhance the privacy of their transactions on the blockchain. It provides a secure and decentralized platform for users to mix their cryptocurrencies, making it difficult to trace the origin and destination of funds.</p>
 
-## Available Scripts
+<h2>How It Works</h2>
 
-In the project directory, you can run:
+<p>CoinFog utilizes a mixing process that combines the funds of multiple users, making it challenging to associate specific funds with their original sources. The basic steps involved in the mixing process are as follows:</p>
 
-### `npm start`
+<ol>
+  <li><strong>Depositing Funds:</strong> Users can deposit their cryptocurrencies into the CoinFog contract. The contract securely receives and holds the deposited funds.</li>
+  <li><strong>Mixing Process:</strong> Once a sufficient number of users have deposited funds or a specific time threshold has passed, CoinFog initiates the mixing process. During mixing, the funds from different users are combined and shuffled, breaking the link between the original deposits and the mixed funds.</li>
+  <li><strong>Withdrawal:</strong> Users can initiate a withdrawal by providing proof of ownership for the mixed funds without revealing their original deposits. This proof is generated using cryptographic techniques, such as zero-knowledge proofs (ZKPs), which validate the ownership without disclosing sensitive information.</li>
+</ol>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+<h2>Features</h2>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<ul>
+  <li>Privacy-enhancing mixing process.</li>
+  <li>Support for various cryptocurrencies (e.g., ETH, ERC-20 tokens).</li>
+  <li>Secure and audited smart contract implementation.</li>
+  <li>User-friendly interface for depositing and withdrawing funds.</li>
+  <li>Option for adjustable anonymity sets to customize privacy levels.</li>
+</ul>
 
-### `npm test`
+<h2>Getting Started</h2>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<p>To get started with CoinFog, follow these steps:</p>
 
-### `npm run build`
+<ol>
+  <li>Clone the CoinFog repository: <code>git clone https://github.com/your-username/coinfog.git</code></li>
+  <li>Install the required dependencies: <code>npm install</code></li>
+  <li>Deploy the smart contract on the Ethereum network of your choice.</li>
+  <li>Configure the frontend interface to connect to the deployed smart contract.</li>
+  <li>Launch the frontend interface: <code>npm start</code></li>
+  <li>Access CoinFog via the web browser at <code>http://localhost:3000</code>.</li>
+</ol>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<p>Make sure you have an Ethereum wallet (e.g., MetaMask) installed and configured to interact with the CoinFog interface.</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<h2>Contributing</h2>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p>We welcome contributions to CoinFog! If you'd like to contribute, please follow these guidelines:</p>
 
-### `npm run eject`
+<ol>
+  <li>Fork the repository.</li>
+  <li>Create a new branch for your feature or bug fix: <code>git checkout -b my-new-feature</code></li>
+  <li>Implement your changes and ensure that the code passes all tests.</li>
+  <li>Commit your changes: <code>git commit -am 'Add new feature'</code></li>
+  <li>Push to the branch: <code>git push origin my-new-feature</code></li>
+  <li>Submit a pull request.</li>
+</ol>
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<p>Photo by Johannes Plenio: https://www.pexels.com/photo/gray-and-white-wallpaper-1103970/</p>

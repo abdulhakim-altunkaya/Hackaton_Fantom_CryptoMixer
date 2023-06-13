@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useAccount } from "../Store.js";
+import { useAccount } from "../src/Store.js";
 import { ethers } from "ethers";
 
 function Main1() {
