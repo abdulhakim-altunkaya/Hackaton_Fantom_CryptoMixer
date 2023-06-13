@@ -50,4 +50,6 @@
   <li>Submit a pull request.</li>
 </ol>
 
-<p>Photo by Johannes Plenio: https://www.pexels.com/photo/gray-and-white-wallpaper-1103970/</p>
+<p>Background image: <a href="https://www.pexels.com/photo/gray-and-white-wallpaper-1103970/">Pexels, by Johannes Plenio</a></p>
+<p>Symbol: <a href="https://www.shareicon.net/mix-cooking-mixer-kitchen-cook-tools-and-utensils-753758">ShareIcon</a></p>
+

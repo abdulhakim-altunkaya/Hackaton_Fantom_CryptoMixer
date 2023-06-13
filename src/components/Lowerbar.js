@@ -2,7 +2,7 @@ import React from 'react'
 
 function Lowerbar() {
   return (
-    <div>Lowerbar</div>
+    <div className='lowerbarDiv'>Lowerbar</div>
   )
 }
 
