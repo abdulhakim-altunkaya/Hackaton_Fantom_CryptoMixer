@@ -1,26 +1,25 @@
 import { create } from "zustand";
 import { ethers } from "ethers";
-import { CONTRACT_ABI } from "./components/AddressABI/ContractABI";
-import { CONTRACT_ADDRESS } from "./components/AddressABI/ContractAddress";
+import { AddressCoinfog } from "./components/AddressABI/AddressCoinfog";
+import { AddressTokenA } from "./components/AddressABI/AddressTokenA";
+import { ABICoinfog } from "./components/AddressABI/ABICoinfog";
+import { ABITokenA } from "./components/AddressABI/ABITokenA";
 
 let signer;
-let provider; 
-let contract1;
+let provider;
+let contractTokenA1;
+let contractCoinfog1;
 
 const connectContract = async () => {
     provider = new ethers.providers.Web3Provider(window.ethereum);
     signer = provider.getSigner();
-    contract1 = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer);
+    contractTokenA1 = new ethers.Contract(AddressTokenA, ABITokenA, signer);
+    contractCoinfog1 = new ethers.Contract(AddressCoinfog, ABICoinfog, signer);
 }
 
 connectContract();
 
-export const useAccount = create( () => (
-    {
-        contract: contract1
-    }
-))
-
-
-
-
+export const useAccount = create( () => ({
+  contractTokenA: contractTokenA1,
+  contractCoinfog: contractCoinfog1, 
+}))
