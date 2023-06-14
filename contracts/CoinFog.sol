@@ -14,9 +14,7 @@ contract CoinFog {
         tokenContract = IERC20(tokenAddress);
     }
 
-    function deposit(uint _amount) external payable {
-        tokenContract.transferFrom(msg.sender, address(this), _amount*(10**18));
-    }
+
 
     function withdraw(address payable receiver, uint amount) public {
         require(address(this).balance >= amount, "insufficient contract balance");
@@ -29,12 +27,26 @@ contract CoinFog {
 
     }
 
+
+
     mapping(bytes32 => uint) public balances;
     bytes32[] public balanceIds;
 
-    function addMapping(bytes32 input1, uint input2) external {
-        balances[input1] = input2;
-        balanceIds.push(input1);
+    error Existing(string message, bytes32 hashdata);
+    modifier isExisting(bytes32 _hash) {
+        for(uint i=0; i<balanceIds.length; i++) {
+            if(balanceIds[i] == _hash) {
+                revert Existing("this hash exists", _hash);
+            }
+        }
+        _;    
+    }
+
+    function deposit(bytes32 _hash, uint _amount) external isExisting(_hash) {
+        require(_amount >= 1, "_amount must be bigger than 1");
+        balanceIds.push(_hash);
+        balances[_hash] = _amount;
+        tokenContract.transferFrom(msg.sender, address(this), _amount*(10**18));
     }
 
     function createHash(string memory _word) external pure returns(bytes32) {
