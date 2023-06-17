@@ -22,7 +22,22 @@ contract CoinFog is Ownable {
     //there will be a fee for depositing and withdrawal to deter scammers
     uint public fee;
     mapping(address => bool) public feePayers;
+    //security variable to pause contract
+    bool public status;
 
+    //Security logic: Contract pause
+    error Stopped(string message, address owner);
+    modifier isPaused() {
+        if(status == true) {
+            revert Stopped("contract has been paused, contact owner", owner());
+        }
+        _;
+    }
+    function togglePause() external onlyOwner {
+        status = !status;
+    }
+
+    //Security logic: Checking if input hash already exists
     error Existing(string message, bytes32 hashdata);
     modifier isExisting(bytes32 _hash) {
         for(uint i=0; i<balanceIds.length; i++) {
@@ -33,6 +48,7 @@ contract CoinFog is Ownable {
         _;    
     }
 
+    //Security logic: checking if msg.sender has paid function call fee
     error NotPaid(string message, address caller);
     modifier hasPaid() {
         if(feePayers[msg.sender] == false) {
@@ -41,9 +57,15 @@ contract CoinFog is Ownable {
         _;
     }
 
-
+    //fee setting, payment and collection logic 
     function setFee(uint _fee) external onlyOwner {
         fee = _fee;
+    }
+    function collectFees() external onlyOwner {
+        uint contractFees = address(this).balance;
+        require(contractFees > 1, "No significant fees collected yet");
+        (bool success, ) = payable(owner()).call{value: contractFees}("");
+        require(success == true, "fee collection failed");
     }
     function payFee() public payable {
         //4 ether which means 4 FTM is a reasonable fee for calling withdrawal function.
@@ -55,7 +77,7 @@ contract CoinFog is Ownable {
     
     //People must also pay for depositing into the contract which is 4 ftm
     //People must also approve contract before sending tokens to this contract
-    function deposit(bytes32 _hash, uint _amount) external hasPaid isExisting(_hash) {
+    function deposit(bytes32 _hash, uint _amount) external hasPaid isExisting(_hash) isPaused {
         require(_amount >= 1, "_amount must be bigger than 1");
         balanceIds.push(_hash);
         uint amount = _amount*(10**18);
@@ -65,8 +87,12 @@ contract CoinFog is Ownable {
 
 
     function withdrawPart(string calldata _privateWord, bytes32 _newHash, address receiver, uint _amount) 
-        external hasPaid isExisting(_newHash) 
+        external hasPaid isExisting(_newHash) isPaused
     {
+        //input validations
+        require(_newHash.length == 32, "invalid new hash");
+        require(_amount > 0, "_amount must be bigger than 0");
+
         //withdrawing the desired amount
         feePayers[msg.sender] = false;
         uint amount = _amount * (10**18);
@@ -84,7 +110,7 @@ contract CoinFog is Ownable {
     }
 
     function withdrawAll(string calldata _privateWord, address receiver) 
-        external hasPaid 
+        external hasPaid isPaused
     {
         //withdrawing all amount
         feePayers[msg.sender] = false;
@@ -98,10 +124,10 @@ contract CoinFog is Ownable {
 
     // HASH CREATION AND COMPARISON FUNCTIONS
 
-    function createHash(string memory _word) external pure returns(bytes32) {
+    function createHash(string calldata _word) external pure returns(bytes32) {
         return keccak256(abi.encodePacked(_word));
     }
-    function compareHash(string memory inputValue) external view returns(bool) {
+    function compareHash(string calldata inputValue) external view returns(bool) {
         bytes32 idHash = keccak256(abi.encodePacked(inputValue));
         for(uint i=0; i<balanceIds.length; i++) {
             if(balanceIds[i] == idHash) {
@@ -123,6 +149,17 @@ contract CoinFog is Ownable {
 
     //getHashAmount function must be protected against exploitataion: internal and hasPaid
     //transfer ownership
+    //Take care of comparehash function    
+
+    /*
+    create an allowance checking logic on the frontend to make sure people 
+    approved main contract before depositing. 
+
+    uint256 allowanceAmount = tokenContract.allowance(msg.sender, address(this));
+    require(allowanceAmount >= _amount, "Insufficient allowance");
+     */
+
+
 }
 
 
