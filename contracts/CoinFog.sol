@@ -19,6 +19,7 @@ contract CoinFog is Ownable {
     mapping(bytes32 => uint) public balances;
     //Later each new hash will be saved in hash array
     bytes32[] public balanceIds;
+
     //there will be a fee for depositing and withdrawal to deter scammers
     uint public fee;
     mapping(address => bool) public feePayers;
@@ -74,11 +75,19 @@ contract CoinFog is Ownable {
         feePayers[msg.sender] = true;
     }
 
-    
+    // ------------------------------------------------------------------------
+    //                          DEPOSIT AND WITHDRAWAL FUNCTIONS
+    // ------------------------------------------------------------------------
+
+    //Function to deposit tokens into the contract
     //People must also pay for depositing into the contract which is 4 ftm
     //People must also approve contract before sending tokens to this contract
     function deposit(bytes32 _hash, uint _amount) external hasPaid isExisting(_hash) isPaused {
+
+        //input validations
+        require(_hash.length == 32, "invalid hash");
         require(_amount >= 1, "_amount must be bigger than 1");
+
         balanceIds.push(_hash);
         uint amount = _amount*(10**18);
         tokenContract.transferFrom(msg.sender, address(this), amount);
@@ -90,7 +99,10 @@ contract CoinFog is Ownable {
         external hasPaid isExisting(_newHash) isPaused
     {
         //input validations
+        require(bytes(_privateWord).length > 0, "private word is not enough long");
         require(_newHash.length == 32, "invalid new hash");
+        require(receiver != address(0), "invalid receiver address");
+        require(bytes20(receiver) == bytes20(address(receiver)), "invalid receiver address");
         require(_amount > 0, "_amount must be bigger than 0");
 
         //withdrawing the desired amount
@@ -112,11 +124,19 @@ contract CoinFog is Ownable {
     function withdrawAll(string calldata _privateWord, address receiver) 
         external hasPaid isPaused
     {
-        //withdrawing all amount
-        feePayers[msg.sender] = false;
+        //input validations
+        require(bytes(_privateWord).length > 0, "private word is not enough long");
+        require(receiver != address(0), "invalid receiver address");
+        require(bytes20(receiver) == bytes20(address(receiver)), "invalid receiver address");
+
+
+        // Get the balance and hash associated with the private word
         (uint balanceFinal, bytes32 balanceHash) = getHashAmount(_privateWord);
+        // Ensure the withdrawal amount is greater than 0
         require(balanceFinal > 0, "Withdraw amount must be bigger than 0");
+        // Set the balance associated with the hash to 0
         balances[balanceHash] = 0;
+        // Transfer the tokens to the receiver's address
         tokenContract.transfer(receiver, balanceFinal);
     }
 
@@ -137,8 +157,12 @@ contract CoinFog is Ownable {
         return false;
     }
     
-    function getHashAmount(string calldata inputValue) private view returns(uint, bytes32) {
+    function getHashAmount(string calldata inputValue) private returns(uint, bytes32) {
+        require(msg.sender == address(this), "only this contract can call");
         bytes32 idHash = keccak256(abi.encodePacked(inputValue));
+        // Resetting function call fee. Each fee is only for 1 function call
+        feePayers[msg.sender] = false;
+
         for(uint i=0; i<balanceIds.length; i++) {
             if(balanceIds[i] == idHash) {
                 return (balances[idHash], idHash);
@@ -146,19 +170,6 @@ contract CoinFog is Ownable {
         }
         return (0, idHash);
     }
-
-    //getHashAmount function must be protected against exploitataion: internal and hasPaid
-    //transfer ownership
-    //Take care of comparehash function    
-
-    /*
-    create an allowance checking logic on the frontend to make sure people 
-    approved main contract before depositing. 
-
-    uint256 allowanceAmount = tokenContract.allowance(msg.sender, address(this));
-    require(allowanceAmount >= _amount, "Insufficient allowance");
-     */
-
 
 }
 
