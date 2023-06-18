@@ -28,7 +28,6 @@ contract TokenA is ERC20Capped {
     //creating token
     constructor(uint cap) ERC20("TokenA", "TOKA") ERC20Capped(cap*(10**18)) {
         owner = msg.sender;
-        _mint(msg.sender, 10000*(10**18));
     }
 
     //minting function for owner
@@ -52,11 +51,11 @@ contract TokenA is ERC20Capped {
         emit TokenBurned(msg.sender, _amount);
     }
 
-    //we need to approve coinfog contract before sending tokens to it
-    function approveCoinFog(address _coinfog, uint _amount) external {
+    //approve swap contract before sending tokens to it for liquidity
+    function approvePanda(address _coinFogContract, uint _amount) external {
         require(_amount > 0, "approve amount must be greater than 0");
         uint amount = _amount*(10**18);
-        _approve(msg.sender, _coinfog, amount);
+        _approve(msg.sender, _coinFogContract, amount);
     }
 
     //general view functions, you can understand what they do from names
