@@ -56,7 +56,7 @@ contract TokenA is ERC20Capped {
     function approveCoinFog(address _coinfog, uint _amount) external {
         require(_amount > 0, "approve amount must be greater than 0");
         uint amount = _amount*(10**18);
-        _approve(msg.sender, _pandaContract, amount);
+        _approve(msg.sender, _coinfog, amount);
     }
 
     //general view functions, you can understand what they do from names

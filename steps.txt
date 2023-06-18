@@ -5,6 +5,8 @@ Later see if you can trigger generateaddress functionality of frontend
 by using a solidity smart contract function. To do that first you need to test
 triggering frontendcode by using events
 
+You should also let the pool to mature before letting people to withdraw
+
 
     //getHashAmount function must be protected against exploitataion: internal and hasPaid
     //transfer ownership

@@ -6,27 +6,28 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract CoinFog is Ownable {
+
+    //Events are created but NOT emitted to leave less footprints on the blockchain
     event Deposit(address indexed sender, uint amount);
     event Withdraw(address indexed receiver, uint amount);
 
+    //SETTING TOKEN CONTRACT
     IERC20 tokenContract;
-
     function setToken(address tokenAddress) external {
         tokenContract = IERC20(tokenAddress);
     }
 
+    //STATE VARIABLES
     //Each deposit will have a hash and an amount information
     mapping(bytes32 => uint) public balances;
     //Later each new hash will be saved in hash array
     bytes32[] public balanceIds;
-
     //there will be a fee for depositing and withdrawal to deter scammers
     uint public fee;
     mapping(address => bool) public feePayers;
-    //security variable to pause contract
-    bool public status;
 
     //Security logic: Contract pause
+    bool public status;
     error Stopped(string message, address owner);
     modifier isPaused() {
         if(status == true) {
@@ -142,19 +143,11 @@ contract CoinFog is Ownable {
 
 
 
-    // HASH CREATION AND COMPARISON FUNCTIONS
-
+    // HASH CREATION AND COMPARISON FUNCTIONs
+    // Function to create a hash. Users will be advised to use other websites to create their keccak256 hashes.
+    // But if they dont, they can use this function.
     function createHash(string calldata _word) external pure returns(bytes32) {
         return keccak256(abi.encodePacked(_word));
-    }
-    function compareHash(string calldata inputValue) external view returns(bool) {
-        bytes32 idHash = keccak256(abi.encodePacked(inputValue));
-        for(uint i=0; i<balanceIds.length; i++) {
-            if(balanceIds[i] == idHash) {
-                return true;
-            } 
-        }
-        return false;
     }
     
     function getHashAmount(string calldata inputValue) private returns(uint, bytes32) {
