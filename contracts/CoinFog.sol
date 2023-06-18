@@ -108,14 +108,14 @@ contract CoinFog is Ownable {
         require(_amount > 0, "_amount must be bigger than 0");
 
         //withdrawing the desired amount
-        feePayers[msg.sender] = false;
         uint amount = _amount * (10**18);
         (uint balanceFinal, bytes32 balanceHash) = getHashAmount(_privateWord);
         require(balanceFinal > amount, "If you want to withdraw all choose withdrawAll function");
         balances[balanceHash] = 0;
         tokenContract.transfer(receiver, amount);
         
-
+        // Resetting function call fee. Each fee is only for 1 function call
+        feePayers[msg.sender] = false;
         //redepositing the amount left
         uint amountLeft = balanceFinal - amount;
         require(amountLeft >= 1, "amountLeft must be bigger than 1");
@@ -131,7 +131,8 @@ contract CoinFog is Ownable {
         require(receiver != address(0), "invalid receiver address");
         require(bytes20(receiver) == bytes20(address(receiver)), "invalid receiver address");
 
-
+        // Resetting function call fee. Each fee is only for 1 function call
+        feePayers[msg.sender] = false;
         // Get the balance and hash associated with the private word
         (uint balanceFinal, bytes32 balanceHash) = getHashAmount(_privateWord);
         // Ensure the withdrawal amount is greater than 0
@@ -151,12 +152,8 @@ contract CoinFog is Ownable {
         return keccak256(abi.encodePacked(_word));
     }
     
-    function getHashAmount(string calldata inputValue) private returns(uint, bytes32) {
-        require(msg.sender == address(this), "only this contract can call");
+    function getHashAmount(string calldata inputValue) private view returns(uint, bytes32) {
         bytes32 idHash = keccak256(abi.encodePacked(inputValue));
-        // Resetting function call fee. Each fee is only for 1 function call
-        feePayers[msg.sender] = false;
-
         for(uint i=0; i<balanceIds.length; i++) {
             if(balanceIds[i] == idHash) {
                 return (balances[idHash], idHash);

@@ -109,6 +109,27 @@ describe("CoinFog", () => {
 
       //4.Depositing 50 tokens with the hash of "APPLE"
       await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 50)
+  });
+
+  it("Should Withdraw All", async () => {
+      //depositing - details above
+      await contractTokenA.mintToken(10000);
+      await contractTokenA.approveCoinFog(addressCoinFog, 2000);
+      const valueToSend = ethers.utils.parseEther("5");
+      await contractCoinFog.payFee({value: valueToSend});
+      await contractCoinFog.setToken(addressTokenA);
+      await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 100);
+      let contractBalance1 = await contractCoinFog.getContractTokenBalance();
+      let depositorBalance1 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
+      console.log(`Contract Balance after deposit: ${contractBalance1.toString()}`);
+      console.log(`Sender Balance after deposit: ${depositorBalance1.toString()}`);
+
+      //withdrawing
+      await contractCoinFog.withdrawAll("APPLE", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+      let contractBalance2 = await contractCoinFog.getContractTokenBalance();
+      let depositorBalance2 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
+      console.log(`Contract Balance after withdrawal: ${contractBalance2.toString()}`);
+      console.log(`Sender Balance after withdrawal: ${depositorBalance2.toString()}`);
   })
 
 });
