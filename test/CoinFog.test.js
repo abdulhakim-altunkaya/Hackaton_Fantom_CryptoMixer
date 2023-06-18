@@ -85,6 +85,20 @@ describe("CoinFog", () => {
       await contractCoinFog.collectFees();
       let contractBalance = await contractCoinFog.getContractEtherBalance();
       expect(contractBalance).to.equal(0);
-  })
+  });
 
+  it("Should approve the CoinFog contract with 1000 tokens", async () => {
+      await contractTokenA.mintToken(10000);
+      await contractTokenA.approveCoinFog(addressCoinFog, 1000);
+      const allowedamount = await contractTokenA.allowance(contractCoinFog.owner(), addressCoinFog);
+      console.log(`CoinFog Contract has ${Number(allowedamount) / (10**18)} token allowance to spend`);
+      expect(Number(allowedamount) / (10**18)).to.equal(1000);
+  })
+/*
+  it("Should deposit token into the Contract", async () => {
+      const valueToSend = ethers.utils.parseEther("5");
+      await contractCoinFog.payFee({value: valueToSend});
+      await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 50);
+  })
+*/
 });

@@ -52,7 +52,7 @@ contract TokenA is ERC20Capped {
     }
 
     //approve swap contract before sending tokens to it for liquidity
-    function approvePanda(address _coinFogContract, uint _amount) external {
+    function approveCoinFog(address _coinFogContract, uint _amount) external {
         require(_amount > 0, "approve amount must be greater than 0");
         uint amount = _amount*(10**18);
         _approve(msg.sender, _coinFogContract, amount);
