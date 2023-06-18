@@ -93,12 +93,22 @@ describe("CoinFog", () => {
       const allowedamount = await contractTokenA.allowance(contractCoinFog.owner(), addressCoinFog);
       console.log(`CoinFog Contract has ${Number(allowedamount) / (10**18)} token allowance to spend`);
       expect(Number(allowedamount) / (10**18)).to.equal(1000);
-  })
-/*
-  it("Should deposit token into the Contract", async () => {
+  });
+
+  it("Should deposit tokens into the Contract", async () => {
+      //1.mint 10000 tokens and approve coinfog contract with 2000 tokens
+      await contractTokenA.mintToken(10000);
+      await contractTokenA.approveCoinFog(addressCoinFog, 2000);
+
+      //2.send transaction fee to the coinfog contract
       const valueToSend = ethers.utils.parseEther("5");
-      await contractCoinFog.payFee({value: valueToSend});
-      await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 50);
+      await contractCoinFog.payFee({ value: valueToSend });
+
+      //3.Set the tokenA contract addresss
+      await contractCoinFog.setToken(addressTokenA);
+
+      //4.Depositing 50 tokens with the hash of "APPLE"
+      await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 50)
   })
-*/
+
 });
