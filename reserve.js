@@ -31,37 +31,6 @@ describe("CoinFog", () => {
     [owner] = await ethers.getSigners();
   });
 
-  it("Should deploy contract and print success message", async () => {
-    console.log("Deployment is successful");
-  });
-
-  it("Should return the symbol of TokenA as TOKA", async () => {
-    const tokenName = await contractTokenA.symbol();
-    expect(tokenName).to.equal("TOKA");
-  });
-
-  it("Should return the owner of the TokenB", async () => {
-    expect(await contractTokenB.owner()).to.equal(owner.address);
-  });
-
-  it("Should mint 1000 tokens from TokenA and TokenB and send it to msg.sender aka owner", async () => {
-    const tokenBalance1 = await contractTokenA.getYourBalance();
-    const tokenBalance2 = await contractTokenB.getYourBalance();
-    //as it returns a string, I need to convert values to Number
-    expect(Number(tokenBalance1) + Number(tokenBalance2)).to.equal(40000);
-  });
-
-  it("Should mint 2000 tokens from TokenA and TokenB and set token addresses on PandaSwap contract", async () => {
-    await contractPandaSwap.setTokenAddresses(addressTokenA, addressTokenB);
-    let tokenAddress = await contractPandaSwap.tokenA();
-    console.log("here is the address of TokenA contract:", tokenAddress);
-  });
-
-  it("Should return the balance of owner address in TokenA", async () => {
-    await contractPandaSwap.setTokenAddresses(addressTokenA, addressTokenB);
-    const tokenABalance = await contractTokenA.balanceOf(owner.address);
-    console.log("Owner Balance in TokenA is: ", tokenABalance);
-  });
 
   it("Should add liquidity in PandaSwap contract", async () => {
     await contractPandaSwap.setTokenAddresses(addressTokenA, addressTokenB);

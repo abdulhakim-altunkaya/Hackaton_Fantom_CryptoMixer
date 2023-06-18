@@ -25,7 +25,6 @@ describe("CoinFog", () => {
 
     //extra steps for some test blocks
     addressTokenA = contractTokenA.address;
-    await contractTokenA.mintToken(20000);
 
     //getting owner for some test blocks
     [owner] = await ethers.getSigners();
@@ -41,7 +40,51 @@ describe("CoinFog", () => {
   })
 
   it("Should return the owner of TokenA", async () => {
-      expect(await contractTokenA.owner()).to.equal(owner.address);
+    let tokenAOwner = await contractTokenA.owner();
+    expect(await contractTokenA.owner()).to.equal(owner.address);
+    console.log(`TokenA Contract owner: ${tokenAOwner}`)
   })
-});
 
+  it("Should return the owner of CoinFog", async () => {
+    let coinFogOwner = await contractCoinFog.owner();
+    expect(await contractCoinFog.owner()).to.equal(owner.address);
+    console.log(`CoinFog Contract owner: ${coinFogOwner}`);
+  })
+
+  it("Should mint 10000 tokenA", async () => {
+    await contractTokenA.mintToken(10000)
+    const tokenBalance = await contractTokenA.getYourBalance();
+    //as it returns a string, I need to convert it to Number
+    expect(Number(tokenBalance)).to.equal(10000);
+    console.log(`TokenA Balance of msg.sender: ${tokenBalance}`);
+  })
+
+  it("Should set addresss of TokenA on CoinFog contract", async () => {
+      await contractCoinFog.setToken(addressTokenA);
+      let tokenAddress = await contractCoinFog.tokenContract();
+      expect(addressTokenA).to.equal(tokenAddress);
+      console.log(`TokenA Contract Address: ${tokenAddress}`);
+  });
+
+  it("Should pause and unpause CoinFog contract", async () => {
+      await contractCoinFog.togglePause();
+      let statusPause = await contractCoinFog.status();
+      expect(statusPause).to.equal(true);
+  });
+
+  it("Should pay transaction fee", async () => {
+      const valueToSend = ethers.utils.parseEther("5");
+      await contractCoinFog.payFee({ value: valueToSend });
+      let contractBalance = await contractCoinFog.getContractEtherBalance();
+      expect(contractBalance).to.equal(5);
+  });
+
+  it("Should collect transaction fees", async () => {
+      const valueToSend = ethers.utils.parseEther("5");
+      await contractCoinFog.payFee({ value: valueToSend});
+      await contractCoinFog.collectFees();
+      let contractBalance = await contractCoinFog.getContractEtherBalance();
+      expect(contractBalance).to.equal(0);
+  })
+
+});

@@ -12,7 +12,7 @@ contract CoinFog is Ownable {
     event Withdraw(address indexed receiver, uint amount);
 
     //SETTING TOKEN CONTRACT
-    IERC20 tokenContract;
+    IERC20 public tokenContract;
     function setToken(address tokenAddress) external {
         tokenContract = IERC20(tokenAddress);
     }
@@ -23,7 +23,6 @@ contract CoinFog is Ownable {
     //Later each new hash will be saved in hash array
     bytes32[] public balanceIds;
     //there will be a fee for depositing and withdrawal to deter scammers
-    uint public fee;
     mapping(address => bool) public feePayers;
 
     //Security logic: Contract pause
@@ -59,9 +58,11 @@ contract CoinFog is Ownable {
         _;
     }
 
+
     //fee setting, payment and collection logic 
+    uint public fee = 5 ether;
     function setFee(uint _fee) external onlyOwner {
-        fee = _fee;
+        fee = _fee * (10**18);
     }
     function collectFees() external onlyOwner {
         uint contractFees = address(this).balance;
@@ -70,9 +71,8 @@ contract CoinFog is Ownable {
         require(success == true, "fee collection failed");
     }
     function payFee() public payable {
-        //4 ether which means 4 FTM is a reasonable fee for calling withdrawal function.
-        //It will deter scam calls
-        require(msg.value > 4 ether, "You need to pay withdrawal fee");
+        //transaction fee will deter scam calls
+        require(msg.value >= fee, "You need to pay withdrawal fee");
         feePayers[msg.sender] = true;
     }
 
@@ -93,6 +93,7 @@ contract CoinFog is Ownable {
         uint amount = _amount*(10**18);
         tokenContract.transferFrom(msg.sender, address(this), amount);
         balances[_hash] = amount;
+
     }
 
 
@@ -162,6 +163,14 @@ contract CoinFog is Ownable {
             }
         }
         return (0, idHash);
+    }
+
+    function getContractEtherBalance() external view returns(uint) {
+        return address(this).balance / (10**18);
+    }
+
+    function getContractTokenBalance() external view returns(uint) {
+        return tokenContract.balanceOf(address(this)) / (10**18);
     }
 
 }
