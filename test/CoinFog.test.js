@@ -122,14 +122,44 @@ describe("CoinFog", () => {
       let contractBalance1 = await contractCoinFog.getContractTokenBalance();
       let depositorBalance1 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
       console.log(`Contract Balance after deposit: ${contractBalance1.toString()}`);
-      console.log(`Sender Balance after deposit: ${depositorBalance1.toString()}`);
+      console.log(`Depositor Balance after deposit: ${depositorBalance1.toString()}`);
 
       //withdrawing
+      //deposit private keyword was APPLE. And the address I found it on test result. It is owner address
       await contractCoinFog.withdrawAll("APPLE", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
       let contractBalance2 = await contractCoinFog.getContractTokenBalance();
       let depositorBalance2 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
       console.log(`Contract Balance after withdrawal: ${contractBalance2.toString()}`);
-      console.log(`Sender Balance after withdrawal: ${depositorBalance2.toString()}`);
+      console.log(`Depositor Balance after withdrawal: ${depositorBalance2.toString()}`);
+  });
+
+  it("Should withdraw part", async () => {
+      //depositing - details above
+      await contractTokenA.mintToken(10000);
+      await contractTokenA.approveCoinFog(addressCoinFog, 1500);
+      const valueToSend = ethers.utils.parseEther("5");
+      await contractCoinFog.payFee({value: valueToSend});
+      await contractCoinFog.setToken(addressTokenA);
+      await contractCoinFog.deposit("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df", 200);
+      let contractBalance1 = await contractCoinFog.getContractTokenBalance();
+      let depositorBalance1 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
+      console.log(`Contract Balance after deposit: ${contractBalance1.toString()}`);
+      console.log(`Depositor Balance after deposit: ${depositorBalance1.toString()}`);
+      let hashAmount = await contractCoinFog.balances("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df") / (10**18);
+      console.log(`Hash 1 Amount before withdrawal: ${hashAmount.toString()}`);
+
+      //withdrawing part
+      //deposite private keyword was "APPLE". Address below is what is provided by hardhat test when I run tests.
+      //New keyword is "ORANGE" and it's hash is: "0x9dcd7672eefe4b089c4de5e2e94651d16999929a1e5d6e9e58e596d01d7f5027"
+      await contractCoinFog.withdrawPart("APPLE", "0x9dcd7672eefe4b089c4de5e2e94651d16999929a1e5d6e9e58e596d01d7f5027", "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", 58);
+      let contractBalance2 = await contractCoinFog.getContractTokenBalance();
+      let depositorBalance2 = await contractTokenA.balanceOf("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") / (10**18);
+      console.log(`Contract Balance after withdrawal: ${contractBalance2.toString()}`);
+      console.log(`Depositor Balance after withdrawal: ${depositorBalance2.toString()}`);
+      let oldHashAmount = await contractCoinFog.balances("0xd57453a0104a6fc1d353ab99db06bab09479efa0154dcea90500636b5b7cb0df") / (10**18);
+      let newHashAmount = await contractCoinFog.balances("0x9dcd7672eefe4b089c4de5e2e94651d16999929a1e5d6e9e58e596d01d7f5027") / (10**18);
+      console.log(`Hash 1 Amount after withdrawal: ${oldHashAmount.toString()}`);
+      console.log(`Hash 2 Amount after withdrawal: ${newHashAmount.toString()}`);
   })
 
 });
