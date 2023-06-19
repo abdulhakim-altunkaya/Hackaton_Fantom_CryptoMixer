@@ -3,12 +3,12 @@ const hre = require("hardhat");
 
 async function main() {
 
-  const Coinfog = await hre.ethers.getContractFactory("Coinfog");
-  const coinfog = await Coinfog.deploy();
+  const CoinFog = await hre.ethers.getContractFactory("CoinFog");
+  const coinFog = await CoinFog.deploy();
 
-  await coinfog.deployed();
+  await coinFog.deployed();
 
-  console.log(`coinfog  deployed to ${coinfog.address}`);
+  console.log(`coinFog  deployed to ${coinFog.address}`);
 }
 
 

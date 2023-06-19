@@ -28,9 +28,9 @@ function ConnectMet() {
                 <>
                 <div className='contractDetailsDiv'>
                     <span>Your Metamask Account:</span>  <br />{account} <br /> 
-                    <span>Owner address:</span> 0x0FFeAf1dd1B54606CdD816B97BaCF51936E3d35a <br />   
-                    <span>CoinFog address:</span> 0x25ff1Ba107cE37F289Fe421F18284e5841370fB6 <br />
-                    <span>TokenA address:</span> 0xC65f8b1C0F135d422ea5850aEC33A2222cFCF247 <br />
+                    <span>Owner address:</span> 0x50b716662ca9717BA5DD7B20b5b722Cf15B0821B <br />   
+                    <span>CoinFog address:</span> 0x088Dbb3123f3D44E8F11675FD851A847aeF670b0 <br />
+                    <span>TokenA address:</span> 0xaeAC981BeD62872aD015EeB53d142bF16dB3CfE5 <br />
                     <span>TokenA symbol & Cap:</span>  TOKA, 1000000 <br />
                     <span>TokenA Standard & Decimals:</span>  ERC20, 18 <br />
                     <span>Network:</span> Fantom Testnet <br />
