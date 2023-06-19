@@ -1,9 +1,14 @@
-import React from 'react'
+import React from 'react';
+import Toka from "./Toka";
+import Owner from "../OwnerOps/Owner";
 
 function TokenWrite() {
   return (
-    <div>TokenWrite</div>
+    <div className='tokenWriteDiv'>
+      <Toka />
+      <Owner />
+    </div>
   )
 }
 
-export default TokenWrite
+export default TokenWrite;
