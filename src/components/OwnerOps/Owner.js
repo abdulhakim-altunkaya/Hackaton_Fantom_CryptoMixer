@@ -9,15 +9,42 @@ import OwnerChangeCF from "./OwnerChangeCF";
 import { AddressOwner } from "../AddressABI/AddressOwner";
 
 function Owner() {
+
+  const {ethereum} = window;
+
+  let [displayStatus, setDisplayStatus] = useState(false);
+
+  const toggleDetails = async () => {
+      if(window.ethereum !== "undefined") {
+        const accounts = await ethereum.request({method: "eth_requestAccounts"});
+        if(accounts[0].toLowerCase() !== AddressOwner.toLowerCase()) {
+          alert("You are not owner, but as this project is an experiment, I will let you to see owner buttons");
+          setDisplayStatus(true);//normally I will delete this line
+          //return //Also I need to uncomment this line when in production
+        } else {
+          setDisplayStatus(true);
+        }
+      }
+  }
+
   return (
     <div>
-      <OwnerMintA />
-      <OwnerPause />
-      <OwnerSetAddr />
-      <OwnerFee />
-      <OwnerWithdraw />
-      <OwnerChangeA />
-      <OwnerChangeCF />
+    <button className='button9' onClick={toggleDetails} id='btnRed'>Owner Operations</button>
+    {
+      displayStatus ? 
+      <>
+          <OwnerMintA />
+          <OwnerPause />
+          <OwnerSetAddr />
+          <OwnerFee />
+          <OwnerWithdraw />
+          <OwnerChangeA />
+          <OwnerChangeCF />
+      </>
+      :
+      <></>
+    }
+
     </div>
   )
 }
