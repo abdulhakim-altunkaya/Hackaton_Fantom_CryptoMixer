@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useAccount } from '../../Store';  
-
+ 
 function TokaMint() {
 
   const contractTokenA = useAccount( state => state.contractTokenA2);

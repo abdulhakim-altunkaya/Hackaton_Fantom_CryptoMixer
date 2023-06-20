@@ -1,9 +1,52 @@
-import React from 'react'
+import React, {useState} from 'react';
+import { useAccount } from '../../Store';  
 
 function TokaBurn() {
+
+  const contractTokenA = useAccount( state => state.contractTokenA2);
+
+  let [amount, setAmount] = useState("");
+  let [message, setMessage] = useState("");
+
+  const burnToken = async () => {
+    //security check 1: no empty input
+    if(amount === "") {
+      alert("Burn at least 1 token");
+      return;
+    }
+
+    //security check 2: No amount less than 1
+    let amount1 = parseInt(amount);
+    if(amount1 < 1) {
+      alert("Burn at least 1 token");
+      return;
+    }
+
+    //security check 3: check user balance
+    let userBalance = await contractTokenA.getYourBalance();
+    let userBalance2 = userBalance.toString();
+    let userBalance3 = parseInt(userBalance2);
+    if(userBalance3 < 1) {
+      alert("You dont have enough TOKA. How do you think you burn something that you dont have?");
+      return;
+    }
+    if(userBalance3 < amount1) {
+      alert("The amount you want to burn is bigger than your balance");
+      return;
+    }
+
+    //execution
+    await contractTokenA.burnToken(amount1);
+    setMessage(`Success, you burned ${amount1} tokenA`)
+  }
+
   return (
-    <div>TokaBurn</div>
+    <div>
+      <button onClick={burnToken} className='button4'>Burn TokenA</button>
+      <input type="number" placeholder='enter amount' className='inputFields'
+      value={amount} onChange={e => setAmount(e.target.value)} /> {message}
+    </div>
   )
 }
 
-export default TokaBurn
+export default TokaBurn;
