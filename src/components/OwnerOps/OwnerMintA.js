@@ -49,7 +49,7 @@ function OwnerMintA() {
   return (
     <div>
         <button onClick={mintToken} className='button4'>Mint TokenA</button>
-        <input type="number" className='inputFields' 
+        <input type="number" className='inputFields' placeholder='enter amount'
         value={amount} onChange={e => setAmount(e.target.value)}/> {message}
     </div>
   )
