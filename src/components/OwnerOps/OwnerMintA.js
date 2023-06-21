@@ -39,10 +39,11 @@ function OwnerMintA() {
     if(accounts[0].toLowerCase() !== AddressOwner.toLowerCase()) {
       setMessage("You are not owner");
       return;
-    } else {
-      await contractTokenA.mintToken(amount1);
-      setMessage(`Success, you minted ${amount1} tokenA`);
     }
+
+    await contractTokenA.mintToken(amount1);
+    setMessage(`Success, you minted ${amount1} tokenA`);
+    
   }
 
   return (
