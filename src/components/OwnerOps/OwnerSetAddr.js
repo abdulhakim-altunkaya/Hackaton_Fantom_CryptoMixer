@@ -13,7 +13,13 @@ function OwnerSetAddr() {
 
   const setAddress = async () => {
 
-    const accounts = await ethereum.request({method: "eth_requestAccounts"});
+    let accounts;
+    if(window.ethereum !== "undefined") {
+      accounts = await ethereum.request({ method: "eth_requestAccounts"});
+    } else {
+      alert("Please install Metamask");
+      return;
+    }
 
     if(addressA === "") {
       alert("You forgot to enter address TokenA (security check 1)");

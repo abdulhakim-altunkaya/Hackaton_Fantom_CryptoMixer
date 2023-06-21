@@ -4,7 +4,7 @@ import { AddressOwner } from "../AddressABI/AddressOwner";
 
 function OwnerFee() {
 
-  const ethereum = {window};
+  const {ethereum} = window;
 
   let contractCoinFog = useAccount(state => state.contractCoinfog2);
 
@@ -12,7 +12,15 @@ function OwnerFee() {
   let [message, setMessage] = useState("");
 
   const changeFee = async () => {
-    const accounts = await ethereum.request({ method: "eth_requestAccounts"});
+    
+    let accounts;
+    if(window.ethereum !== "undefined") {
+      accounts = await ethereum.request({ method: "eth_requestAccounts"});
+    } else {
+      alert("Please install Metamask");
+      return;
+    }
+    
     let amount1 = parseInt(amount);
 
     if(accounts[0].toLowerCase() !== AddressOwner.toLowerCase()) {
@@ -21,12 +29,12 @@ function OwnerFee() {
     }
 
     if(amount1 < 0 || amount1 > 19) {
-      alert("You cannot set less than 0 and more than 20 FTM");
+      alert("You cannot set less than 0 and more than 20 FTM (Security check 2)");
       return;
     }
 
     if(amount === "") {
-      alert("You cannot leave amount area empty");
+      alert("You cannot leave amount area empty (Security check 3)");
       return;
     }
 

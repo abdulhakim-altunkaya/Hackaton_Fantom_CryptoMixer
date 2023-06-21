@@ -11,7 +11,15 @@ function OwnerPause() {
   let[message, setMessage] = useState("");
 
   const togglePause = async () => {
-    const accounts = await ethereum.request({method: "eth_requestAccounts"});
+
+    let accounts;
+    if(window.ethereum !== "undefined") {
+      accounts = await ethereum.request({ method: "eth_requestAccounts"});
+    } else {
+      alert("Please install Metamask");
+      return;
+    }
+
     if(accounts[0].toLowerCase() !== AddressOwner.toLowerCase()) {
       alert("You are not owner");
       return;

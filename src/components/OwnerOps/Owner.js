@@ -24,6 +24,9 @@ function Owner() {
         } else {
           setDisplayStatus(true);
         }
+      } else {
+        alert("Please install Metamask");
+        return;
       }
   }
 

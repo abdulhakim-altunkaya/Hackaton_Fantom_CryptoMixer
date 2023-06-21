@@ -28,7 +28,14 @@ function OwnerMintA() {
       alert("You cannot mint this much (Security Check 4)");
       return;
     }
-    const accounts = await ethereum.request({method: "eth_requestAccounts"});
+    let accounts;
+    if(window.ethereum !== "undefined") {
+      accounts = await ethereum.request({ method: "eth_requestAccounts"});
+    } else {
+      alert("Please install Metamask");
+      return;
+    }
+    
     if(accounts[0].toLowerCase() !== AddressOwner.toLowerCase()) {
       setMessage("You are not owner");
       return;
