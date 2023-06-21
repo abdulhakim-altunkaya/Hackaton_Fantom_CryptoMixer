@@ -26,7 +26,7 @@ function FogBalances() {
       {
         displayStatus ?
         <>
-          <span>CoinFog TokenA Balance:</span> {balanceTokenA} <br />
+          <span>CoinFog TokenA Pool Balance:</span> {balanceTokenA} <br />
           <span>Deposit and Withdrawal Fee: {txFee} FTM </span> <br /> <br />
         </>
         :
