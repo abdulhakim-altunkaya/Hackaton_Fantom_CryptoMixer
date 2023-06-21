@@ -89,6 +89,7 @@ contract CoinFog is Ownable {
         require(_hash.length == 32, "invalid hash");
         require(_amount >= 1, "_amount must be bigger than 1");
 
+        feePayers[msg.sender] = false;
         balanceIds.push(_hash);
         uint amount = _amount*(10**18);
         tokenContract.transferFrom(msg.sender, address(this), amount);
