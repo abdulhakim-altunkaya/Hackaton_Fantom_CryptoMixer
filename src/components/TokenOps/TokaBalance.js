@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useAccount } from '../../Store';  
 
-function TokaBalance() {
+function TokaBalance() { 
 
   const contractTokenA = useAccount(state => state.contractTokenA2);
 
