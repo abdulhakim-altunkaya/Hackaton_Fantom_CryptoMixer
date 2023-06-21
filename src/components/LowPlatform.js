@@ -1,8 +1,11 @@
-import React from 'react'
+import React from 'react';
+import Fog from "./MixerOps/Fog";
 
 function LowPlatform() {
   return (
-    <div>LowPlatform</div>
+    <div>
+      <Fog />
+    </div>
   )
 }
 

@@ -6,6 +6,7 @@ import OwnerFee from "./OwnerFee";
 import OwnerWithdraw from "./OwnerWithdraw";
 import OwnerChangeA from "./OwnerChangeA";
 import OwnerChangeCF from "./OwnerChangeCF";
+import OwnerFeeBalance from "./OwnerFeeBalance";
 import { AddressOwner } from "../AddressABI/AddressOwner";
 
 function Owner() {
@@ -41,6 +42,7 @@ function Owner() {
           <OwnerSetAddr />
           <OwnerFee />
           <OwnerWithdraw />
+          <OwnerFeeBalance />
           <OwnerChangeA />
           <OwnerChangeCF />
       </>

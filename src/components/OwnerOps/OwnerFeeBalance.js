@@ -25,7 +25,7 @@ function OwnerFeeBalance() {
       return;
     }
 
-    let feeBalance = await contractCoinFog.getContractTokenBalance();
+    let feeBalance = await contractCoinFog.getContractEtherBalance();
     let feeBalance2 = feeBalance.toString();
     setMessage(`So far collected fees: ${feeBalance2} FTM`);
   }
