@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useAccount } from '../../Store';
 import { AddressCoinfog } from "../AddressABI/AddressCoinfog";
+import { useMediaQuery } from 'react-responsive';
+
 
 function FogDeposit() {
+
+  const isMobile = useMediaQuery({ maxWidth: 768 });
 
   const {ethereum} = window;
 
@@ -85,7 +89,7 @@ function FogDeposit() {
   }
   return (
     <div>
-      <button className='button10' onClick={depositAmount}>Deposit</button>
+      <button className='button10' onClick={depositAmount}>Deposit</button> {isMobile ? <br /> : ""}
       <input type="text" className='inputFields' placeholder='enter hash'
       value={hashInput} onChange={e => setHashInput(e.target.value)}/>
       <input type="number" className='inputFields' placeholder='enter amount'

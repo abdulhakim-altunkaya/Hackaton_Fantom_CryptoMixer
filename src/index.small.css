@@ -49,8 +49,8 @@
       .button6 {
         height: 26px;
         width: 260px;
-        font-size: 17px;
-        padding: 3px;
+        font-size: 15px;
+        padding: 2px;
         background-color: #37363d;
         color: #fcfcfc;
         border: 2px whitesmoke solid;
@@ -58,6 +58,9 @@
         font-family: 'Dosis', sans-serif;
         transition-duration: 0.4s;
         user-select: none;
+        display: flex;
+        justify-content: center; /* Center horizontally */
+        align-items: center; /* Center vertically */
       }
       .button6:hover {
         font-weight: bolder;
@@ -257,19 +260,19 @@
       }
 
       .button10 {
-        background-color: aquamarine;
-        font-size: 21px;
+        background-color: #67de52;
+        font-size: 16px;
         margin-top: 20px;
-        padding: 4px;
+        padding: 5px;
         border-radius: 5px;
-        min-width: 70vw !important;
-        width: 220px;
+        min-width: 30vw !important;
+        width: 150px;
         cursor: pointer;
         transition-duration: 0.3s;
         margin-bottom: 10px;
       }
       .button10:hover {
-        background-color: lightseagreen;
+        background-color: #357c28;
         font-weight: bolder;
       }
       .button10:active {

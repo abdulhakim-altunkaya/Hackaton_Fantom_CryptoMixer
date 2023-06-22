@@ -27,7 +27,6 @@ function FogHash() {
   return (
     <div>
       <br />
-      <p>Create a keccak256 hash of any private keyword:</p>
       <button className='button10' onClick={hashString}>Create a Hash</button>
       <input type="text" className='inputFields' placeholder='write anything' 
       value={privateWord} onChange={e => setPrivateWord(e.target.value)}/> <br /> 
