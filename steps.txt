@@ -10,21 +10,24 @@ You should also let the pool to mature before letting people to withdraw
 Make public variables private
 
 
-//getHashAmount function must be protected against exploitataion: internal and hasPaid
-//transfer ownership
-//Take care of comparehash function    
-//dont forget to make mapping private
-//dont forget to update ConnectMet component account information
+getHashAmount function must be protected against exploitataion: internal and hasPaid
+transfer ownership
+Take care of comparehash function    
+dont forget to make mapping private
+dont forget to update ConnectMet component account information
+
+You can add a check user allowance before depositing in FogDeposit component. However, 
+as this check would make function execution slower, I decided not to implement it.
 
 
-/*
+
 create an allowance checking logic on the frontend to make sure people 
 approved main contract before depositing. 
 
 uint256 allowanceAmount = tokenContract.allowance(msg.sender, address(this));
 require(allowanceAmount >= _amount, "Insufficient allowance");
-*/
-/*
+
+
 banned private words: after each withdrawal used private key will be encrypted and 
 saved inside the array. Later we will check this array to see if encrypted private key is used or not
 before sending value to the user. The purpose is, instead of updating mapping hash balance, better to 
@@ -33,4 +36,3 @@ investigators to track the balance movements and associated msg senders.
 But you must consider withdrawPart function, as it will need amount data of the mapping.
 And still I am not sure if updating balance or hashing private key will leave less track on the blockchain    
 bytes32[] private usedPrivateKeys;
-*/
