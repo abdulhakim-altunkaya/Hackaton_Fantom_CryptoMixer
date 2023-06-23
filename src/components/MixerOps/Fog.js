@@ -6,14 +6,12 @@ import FogDeposit from "./FogDeposit";
 import FogWithdrawAll from "./FogWithdrawAll";
 import FogWithdrawPart from "./FogWithdrawPart";
 import FogFee from "./FogFee";
-import FogAllowance from "./FogAllowance";
 
 function Fog() {
   return (
     <div>
       <FogBalances />
       <FogApprove />
-      <FogAllowance/>
       <FogFee />
       <FogHash />
       <FogDeposit />
