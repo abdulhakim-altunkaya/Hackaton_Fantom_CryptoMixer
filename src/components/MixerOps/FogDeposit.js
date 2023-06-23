@@ -89,7 +89,7 @@ function FogDeposit() {
   }
   return (
     <div>
-      <button className='button10' onClick={depositAmount}>Deposit</button> {isMobile ? <br /> : ""}
+      <button className='button10' onClick={depositAmount}>Deposit</button>{isMobile ? <br /> : ""}
       <input type="text" className='inputFields' placeholder='enter hash'
       value={hashInput} onChange={e => setHashInput(e.target.value)}/>
       <input type="number" className='inputFields' placeholder='enter amount'

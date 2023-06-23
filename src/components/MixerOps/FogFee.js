@@ -11,7 +11,7 @@ function FogFee() {
 
     const payFee = async () => {
         let userAccount;
-        //checking user balance before paying fee
+        //checking if user already paid or not
         if(window.ethereum !== "undefined") {
             const accounts = await ethereum.request({method: "eth_requestAccounts"});
             userAccount = accounts[0];
