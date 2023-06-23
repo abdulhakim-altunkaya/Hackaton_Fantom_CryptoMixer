@@ -28,7 +28,7 @@ function FogHash() {
     <div>
       <br />
       <button className='button10' onClick={hashString}>Create a Hash</button>
-      <input type="text" className='inputFields' placeholder='write anything' 
+      <input type="text" className='inputFields' placeholder='private keyword' 
       value={privateWord} onChange={e => setPrivateWord(e.target.value)}/> <br /> 
       {message} <br />
       {hashOutput}
