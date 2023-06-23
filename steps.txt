@@ -15,7 +15,9 @@ transfer ownership
 Take care of comparehash function    
 dont forget to make mapping private
 dont forget to update ConnectMet component account information
-
+Prevent repetitive hashes
+I can also add a check on components to see if contract is paused or not
+Maybe you can catch errors thrown by contract on the frontend better instead of red screen
 You can add a check user allowance before depositing in FogDeposit component. However, 
 as this check would make function execution slower, I decided not to implement it.
 
