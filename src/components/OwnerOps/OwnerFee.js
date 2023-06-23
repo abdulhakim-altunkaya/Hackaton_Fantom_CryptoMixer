@@ -45,8 +45,9 @@ function OwnerFee() {
 
   return (
     <div>
-      <p>Fee is 2 FTM. Each time you deposit or withdraw, you'll need to pay 2 FTM. This fee
-        is mainly to keep scammers away from the system.
+      <p>
+        Fee is 1 FTM. Each time you deposit or withdraw, you'll need to pay 1 FTM. This 
+        fee is mainly to keep scammers away from the system.
       </p>
       <button onClick={changeFee} className='button4'>Update Fee</button>
       <input type="number" className='inputFields' placeholder='enter new fee'

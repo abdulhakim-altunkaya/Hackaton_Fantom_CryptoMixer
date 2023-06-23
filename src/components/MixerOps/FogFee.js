@@ -34,7 +34,7 @@ function FogFee() {
 
     return (
         <div>
-            <button className='button10' onClick={payFee}>Pay Fee (2 FTM)</button> {message}
+            <button className='button10' onClick={payFee}>Pay Fee (1 FTM)</button> {message}
         </div>
     )
 }

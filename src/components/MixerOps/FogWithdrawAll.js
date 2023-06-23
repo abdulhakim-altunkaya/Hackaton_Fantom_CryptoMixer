@@ -9,14 +9,45 @@ function FogWithdrawAll() {
   const {ethereum} = window;
 
   const contractCoinFog = useAccount(state => state.contractCoinfog2);
-  const contractTokenA = useAccount(state => state.contractTokenA2);
 
   let [message, setMessage] = useState("");
   let [privateWord, setPrivateWord] = useState("");
   let [receiver, setReceiver] = useState("");
 
   const withdrawAll = async () => {
-    
+
+    //private words checks
+    if(privateWord === "" || receiver === "") {
+      alert("You cannot leave input areas empty (security check 1)");
+      return
+    }
+
+    //receiver address checks
+    if(receiver.length < 39) {
+      alert("invalid address length (security check 2)");
+      return;
+    }
+    if(receiver.slice(0, 2) !== "0x") {
+      alert("invalid hash (security check 3)");
+      return;
+    }
+
+    //user checks
+    let userAccount;
+    if(window.ethereum !== "undefined") {
+      const accounts = await ethereum.request({method: "eth_requestAccounts"});
+      userAccount = accounts[0];
+    } else {
+      alert("You need to install Metamask (security check 4)")
+    }
+    let feePaidStatus = await contractCoinFog.feePayers(userAccount);
+    if(feePaidStatus === false) {
+      alert("You need to pay transaction fee (security check 5)");
+      return;
+    }
+
+    await contractCoinFog.withdrawAll(privateWord, receiver);
+    setMessage("The Balance is withdrawn");
   }
 
   return (
