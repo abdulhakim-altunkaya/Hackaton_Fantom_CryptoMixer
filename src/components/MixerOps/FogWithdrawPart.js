@@ -82,6 +82,11 @@ function FogWithdrawPart() {
         return;
       }
 
+      let doesHashExist = await contractCoinFog.checkHashExist(newHash);
+      if(doesHashExist === true) {
+        alert("this hash already exists, create a new hash from another private keyword (security check 10)");
+        return;
+      }
 
       await contractCoinFog.withdrawPart(privateWord, newHash, receiverAddress, amount);
       setMessage("Part Withdrawal is successful");

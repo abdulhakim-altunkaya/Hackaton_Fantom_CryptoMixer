@@ -46,17 +46,6 @@ function FogApprove() {
 
   return (
     <div>
-      <p>
-        To use this system: <br />
-        1. Mint some TokenA ("TOKA") in "Token Operations" section. <br />
-        2. Make sure you are on Fantom testnet and have some FTM testnet coins. <br />
-        3. Approve the system with any amount.The approve amount must be smaller than <br />
-        your TokenA balance but it must be bigger than the amount that you plan to deposit. <br />
-        4. Think of a private keyword, like a password. Then write it in the "Create a Hash" input area <br />
-        and click on "Create a Hash". It will give you a hash and it should start with "0x". <br />
-        5. Save your private word and its hash. <br />
-        6. Then go to "Deposit" button input area, enter hash and the TOKA amount you want to deposit. <br />
-      </p>
       <button className='button10' onClick={approveCoinFog}>Approve</button>
       <input type="number" className='inputFields' placeholder='TokenA amount'
       value={amount} onChange={ e => setAmount(e.target.value)} /> {message}

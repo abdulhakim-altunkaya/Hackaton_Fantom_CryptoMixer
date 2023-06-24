@@ -10,19 +10,11 @@ function FogBalances() {
   const contractCoinFog = useAccount(state => state.contractCoinfog2);
   const contractTokenA = useAccount(state => state.contractTokenA2);
 
-  let [displayStatus, setDisplayStatus] = useState(false);
   let [balanceTokenA, setBalanceTokenA] = useState("");
   let [txFee, setTxFee] = useState("");
   let [userAllowanceAmount, setUserAllowanceAmount] = useState("");
 
   const getBalances = async () => {
-    
-    setDisplayStatus(!displayStatus);
-
-    //if display status is false, we will save website from executing all code below
-    if(displayStatus === false) {
-      return;
-    }
 
     //getting user address who calls this function
     let userAccount;
@@ -47,21 +39,34 @@ function FogBalances() {
     setBalanceTokenA(tokaBalance.toString())
     setTxFee(fee2.toString());
     setUserAllowanceAmount(userAllowance3);
+
+    
   }
 
   return (
     <div>
+      <p>
+        To use this system: <br />
+        1. Mint some TokenA ("TOKA") in "Token Operations" section. <br />
+        2. Make sure you are on Fantom testnet and have some FTM testnet coins. <br />
+        3. Approve the system with any amount. Logic:<br />
+        <span>Deposit amount &lt; Approve amount &lt; Your TokenA Balance</span><br />
+        4. Think of a private keyword, like a password. Then write it in the "Create a Hash" input area <br />
+        and click on "Create a Hash". It will give you a hash. <br />
+        5. Save your private word and its hash. <br />
+        6. Then pay fee by clicking on "Pay Fee" button. <br />
+        7. Then go to "Deposit" area, enter hash and the TOKA amount you want to deposit. <br />
+        8. Later if you want to withdraw all, first "Pay Fee" again, then go to "Withdraw All" button and enter details. <br />
+        If you want to withdraw part, create a new hash from another keyword and enter other details and click "Withdraw Part".
+      </p>
       <button onClick={getBalances} className='button10'>GET BALANCES</button> <br />
-      {
-        displayStatus ?
-        <>
-          <strong><span>CoinFog TokenA Pool Balance:</span></strong> {balanceTokenA} TokenA<br />
-          <strong>User Allowance:</strong> {userAllowanceAmount} TokenA <br />
-          <strong>Deposit and Withdrawal Fee:</strong> {txFee} FTM <br /> <br />
-        </>
-        :
-        <></>
-      }
+
+      <>
+        <strong><span>CoinFog TokenA Pool Balance:</span></strong> {balanceTokenA} TokenA<br />
+        <strong>User Allowance:</strong> {userAllowanceAmount} TokenA <br />
+        <strong>Deposit and Withdrawal Fee:</strong> {txFee} FTM <br /> <br />
+      </>
+
     </div>
   )
 }

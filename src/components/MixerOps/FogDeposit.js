@@ -76,17 +76,23 @@ function FogDeposit() {
       return;
     }
 
+    let doesHashExist = await contractCoinFog.checkHashExist(hashInput);
+    if(doesHashExist === true) {
+      alert("this hash already exists, create a new hash from another private keyword (security check 9)");
+      return;
+    }
+
     //USER CHECKS
     let feePaidStatus = await contractCoinFog.feePayers(userAccount);
     if(feePaidStatus === false) {
-      alert("You need to pay transaction fee (security check 9)");
+      alert("You need to pay transaction fee (security check 10)");
       return;
     }
 
     //SYSTEM CHECKS
     let systemPause = await contractCoinFog.status();
     if(systemPause === true) {
-      alert("System has been paused by owner. Contact him to unpause it");
+      alert("System has been paused by owner. Contact him to unpause it (security check 11)");
       return;
     }
 

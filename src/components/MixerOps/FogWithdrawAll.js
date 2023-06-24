@@ -22,6 +22,13 @@ function FogWithdrawAll() {
       return
     }
 
+    //SYSTEM CHECKS
+    let systemPause = await contractCoinFog.status();
+    if(systemPause === true) {
+      alert("System has been paused by owner. Contact him to unpause it");
+      return;
+    }
+
     //receiver address checks
     if(receiver.length < 39) {
       alert("invalid address length (security check 2)");
@@ -29,13 +36,6 @@ function FogWithdrawAll() {
     }
     if(receiver.slice(0, 2) !== "0x") {
       alert("invalid hash (security check 3)");
-      return;
-    }
-
-    //SYSTEM CHECKS
-    let systemPause = await contractCoinFog.status();
-    if(systemPause === true) {
-      alert("System has been paused by owner. Contact him to unpause it");
       return;
     }
 
