@@ -1,1 +1,1 @@
-export const AddressCoinfog = "0x088Dbb3123f3D44E8F11675FD851A847aeF670b0"
+export const AddressCoinfog = "0x5D2d9c6D91eFcEE65Ad4Bdf30865539d9c635aa5"
