@@ -32,6 +32,13 @@ function FogWithdrawAll() {
       return;
     }
 
+    //SYSTEM CHECKS
+    let systemPause = await contractCoinFog.status();
+    if(systemPause === true) {
+      alert("System has been paused by owner. Contact him to unpause it");
+      return;
+    }
+
     //user checks
     let userAccount;
     if(window.ethereum !== "undefined") {

@@ -28,27 +28,27 @@ function FogWithdrawPart() {
 
       //receiver address checks
       if(receiverAddress.length < 39) {
-        alert("invalid address length (security check 2)");
+        alert("invalid address length (security check 1)");
         return;
       }
       if(receiverAddress.slice(0, 2) !== "0x") {
-        alert("invalid hash (security check 3)");
+        alert("invalid hash (security check 1)");
         return;
       }
 
       //AMOUNT CHECKS
       if(amount1 === "") {
-        alert("amount area cannot be empty (Security Check 1)");
+        alert("amount area cannot be empty (Security Check 3)");
         return;
       }
 
       if(amount === "") {
-        alert("amount area cannot be empty (Security Check 2)");
+        alert("amount area cannot be empty (Security Check 4)");
         return;
       }
 
       if(amount1 < 1) {
-        alert("amount cannot be less than 1 (Security Check 3)");
+        alert("amount cannot be less than 1 (Security Check 5)");
         return;
       }
 
@@ -68,10 +68,17 @@ function FogWithdrawPart() {
         return;
       }
 
+      //SYSTEM CHECKS
+      let systemPause = await contractCoinFog.status();
+      if(systemPause === true) {
+        alert("System has been paused by owner. Contact him to unpause it");
+        return;
+      }
+
       //USER CHECKS
       let feePaidStatus = await contractCoinFog.feePayers(userAccount);
       if(feePaidStatus === false) {
-        alert("You need to pay transaction fee");
+        alert("You need to pay transaction fee (security check 9)");
         return;
       }
 

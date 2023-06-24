@@ -79,7 +79,14 @@ function FogDeposit() {
     //USER CHECKS
     let feePaidStatus = await contractCoinFog.feePayers(userAccount);
     if(feePaidStatus === false) {
-      alert("You need to pay transaction fee");
+      alert("You need to pay transaction fee (security check 9)");
+      return;
+    }
+
+    //SYSTEM CHECKS
+    let systemPause = await contractCoinFog.status();
+    if(systemPause === true) {
+      alert("System has been paused by owner. Contact him to unpause it");
       return;
     }
 
