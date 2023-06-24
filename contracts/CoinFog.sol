@@ -19,9 +19,9 @@ contract CoinFog is Ownable {
 
     //STATE VARIABLES
     //Each deposit will have a hash and an amount information
-    mapping(bytes32 => uint) public balances;
+    mapping(bytes32 => uint) private balances;
     //Later each new hash will be saved in hash array
-    bytes32[] public balanceIds;
+    bytes32[] private balanceIds;
     //there will be a fee for depositing and withdrawal to deter scammers
     mapping(address => bool) public feePayers;
 
@@ -161,6 +161,19 @@ contract CoinFog is Ownable {
             }
         }
         return (0, idHash);
+    }
+
+    function checkHashExist(bytes32 _hash) external view returns(bool) {
+        if(balanceIds.length < 1) {
+            return false;
+        }
+        for(uint i = 0; i<balanceIds.length; i++) {
+            if(balanceIds[i] == _hash) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     function getContractEtherBalance() external view returns(uint) {

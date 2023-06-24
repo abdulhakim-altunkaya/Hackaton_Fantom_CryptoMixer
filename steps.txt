@@ -1,36 +1,9 @@
-Create a simple contract and frontend
-and see if you can generate addresses from frontend
-
-Later see if you can trigger generateaddress functionality of frontend
-by using a solidity smart contract function. To do that first you need to test
-triggering frontendcode by using events
-
-You should also let the pool to mature before letting people to withdraw
-
-Make public variables private
-
-
-getHashAmount function must be protected against exploitataion: internal and hasPaid
-transfer ownership
-Take care of comparehash function    
-dont forget to make mapping private
 dont forget to update ConnectMet component account information
-Prevent repetitive hashes
-I can also add a check on components to see if contract is paused or not
-Maybe you can catch errors thrown by contract on the frontend better instead of red screen
-You can add a check user allowance before depositing in FogDeposit component. However, 
-as this check would make function execution slower, I decided not to implement it.
 
-
-
-create an allowance checking logic on the frontend to make sure people 
-approved main contract before depositing. 
-
-uint256 allowanceAmount = tokenContract.allowance(msg.sender, address(this));
-require(allowanceAmount >= _amount, "Insufficient allowance");
-
-
-banned private words: after each withdrawal used private key will be encrypted and 
+PRODUCTION IMPROVEMENTS 
+***You should also let the pool to mature before letting people to withdraw
+***Catch errors thrown by contract on the frontend better instead of red screen
+***banned private words: after each withdrawal used private key will be encrypted and 
 saved inside the array. Later we will check this array to see if encrypted private key is used or not
 before sending value to the user. The purpose is, instead of updating mapping hash balance, better to 
 save used private keys inside an array. If we dont update balance of the hashes, it will be harder for 
