@@ -48,7 +48,7 @@ function FogBalances() {
       <p>
         To use this system: <br />
         1. Mint some TokenA ("TOKA") in "Token Operations" section. <br />
-        2. Make sure you are on Fantom testnet and have some FTM testnet coins. <br />
+        2. Make sure you are on Fantom Mainnet and have some FTM coins. <br />
         3. Approve the system with any amount. Logic:<br />
         <span>Deposit amount &lt; Approve amount &lt; Your TokenA Balance</span><br />
         4. Think of a private keyword, like a password. Then write it in the "Create a Hash" input area <br />

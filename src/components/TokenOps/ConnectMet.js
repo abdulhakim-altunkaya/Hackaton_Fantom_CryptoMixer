@@ -33,7 +33,7 @@ function ConnectMet() {
                     <span>TokenA address:</span> 0x964e16939c2Bd80AFD75184D3D7ec61b384f15B0 <br />
                     <span>TokenA symbol & Cap:</span>  TOKA, 1000000 <br />
                     <span>TokenA Standard & Decimals:</span>  ERC20, 18 <br />
-                    <span>Network:</span> Fantom Testnet <br />
+                    <span>Network:</span> Fantom Mainnet <br />
                 </div>
                 </>
                 :
